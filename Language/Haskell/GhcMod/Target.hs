@@ -494,17 +494,18 @@ loadTargets opts targetStrs = do
 needsHscInterpreted :: ModuleGraph -> Bool
 needsHscInterpreted = any $ \ms ->
                 let df = ms_hspp_opts ms in
-#if __GLASGOW_HASKELL__ >= 800
-                   TemplateHaskell `xopt` df
-                || QuasiQuotes     `xopt` df
-                || PatternSynonyms `xopt` df
-#else
-                   Opt_TemplateHaskell `xopt` df
-                || Opt_QuasiQuotes     `xopt` df
-#if __GLASGOW_HASKELL__ >= 708
-                || (Opt_PatternSynonyms `xopt` df)
-#endif
-#endif
+                   True
+-- #if __GLASGOW_HASKELL__ >= 800
+--                    TemplateHaskell `xopt` df
+--                 || QuasiQuotes     `xopt` df
+--                 || PatternSynonyms `xopt` df
+-- #else
+--                    Opt_TemplateHaskell `xopt` df
+--                 || Opt_QuasiQuotes     `xopt` df
+-- #if __GLASGOW_HASKELL__ >= 708
+--                 || (Opt_PatternSynonyms `xopt` df)
+-- #endif
+-- #endif
 
 cabalResolvedComponents :: (IOish m) =>
    GhcModT m (Map ChComponentName (GmComponent 'GMCResolved (Set ModulePath)))
